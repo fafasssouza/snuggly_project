@@ -3,10 +3,11 @@ import { IMediator } from "src/shared/mediator_impl";
 
 export class MyContext
 {
-    private sequelize: Sequelize;
+    //private static instance: MyContext;
+    public sequelize: Sequelize;
     private mediator: IMediator;
 
-    public constructor(mediator: IMediator) 
+    public constructor(mediator?: IMediator) 
     {
         this.sequelize = new Sequelize(
             process.env.POSTGRES_DB, 
@@ -18,6 +19,17 @@ export class MyContext
 
         this.mediator = mediator;
     }
+
+    /*public static getInstace(mediator?: IMediator) : MyContext 
+    {
+        if(!MyContext.instance) 
+        {
+            if(!mediator)
+                throw new Error("Mediator is necessary for to create the instance.");
+            MyContext.instance = new MyContext(mediator);
+        }
+        return MyContext.instance;
+    }*/
 
     public async testConnection() 
     {
@@ -32,12 +44,18 @@ export class MyContext
         }     
     }
 
+    /*public static get getSequalize() : Sequelize
+    {
+        return this.instance.sequelize;
+    }*/
+
     public async setModel() 
     {
         try
         {
             this.mediator.send(this.sequelize);
             await this.sequelize.sync({ alter: true });
+            this.sequelize.close();
         }
         catch(e)
         {

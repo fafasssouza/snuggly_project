@@ -1,4 +1,5 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
+import { IUser } from "src/domain/user/user_impl";
 
 export class UserModel 
 {
@@ -38,6 +39,19 @@ export class UserModel
             }
 
         }, this.context);
+    }
+
+    public async createUser(user: IUser) : Promise<boolean>
+    {
+        try
+        {
+           await _User.create({id: user.id, name: user.user_name, email: user.email, password: user.password});
+           return true;
+        }
+        catch(e)
+        {
+            throw new Error("Error when its trying save a new User in database: " + e);
+        }
     }
 }
 

@@ -12,7 +12,8 @@ async function bootstrap()
   myContext.testConnection();
   myContext.setModel();
 
-  const manager = new Manager(myContext);
+
+  const manager = Manager.getInstance(modelMediator);
  
   const app = await NestFactory.create(AppModule);
   await app.listen(8957);

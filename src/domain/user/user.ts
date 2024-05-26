@@ -26,12 +26,15 @@ export class User extends Entity implements IAggregateRoot
 
     public getEmail(): string
     {
-        const email : string = this.email.getEmail;
-        return email; 
+        return this.email.getEmail;
     }
 
     public getPassword() : string
     {
         return this.password.getPassword;
+    }
+
+    public notify(): void {
+        this.mediator.send(this);
     }
 }

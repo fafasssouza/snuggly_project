@@ -45,3 +45,4 @@ services:
       - POSTGRES_PASSWORD=4059
       - POSTGRES_DB=todotask
       - POSTGRES_HOST=postgres
+      - SALT=fafadasgalaxias
