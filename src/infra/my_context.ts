@@ -55,7 +55,6 @@ export class MyContext
         {
             this.mediator.send(this.sequelize);
             await this.sequelize.sync({ alter: true });
-            this.sequelize.close();
         }
         catch(e)
         {

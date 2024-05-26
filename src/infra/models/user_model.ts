@@ -50,7 +50,7 @@ export class UserModel
         }
         catch(e)
         {
-            throw new Error("Error when its trying save a new User in database: " + e);
+            throw console.error("Error when its trying save a new User in database: " + e);
         }
     }
 }

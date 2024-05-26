@@ -3,7 +3,8 @@ import { RegisterService } from "./register.service";
 import { RegisterController } from "./register.controller";
 
 @Module({
-    providers: [RegisterService],
     controllers: [RegisterController],
+    providers: [RegisterService],
+    
 })
 export class RegisterModule {} 

@@ -1,5 +1,5 @@
 import { IMediator } from "src/shared/mediator_impl";
-import {uuid4} from "uuid";
+import { randomBytes } from "crypto";
 
 export abstract class Entity 
 {
@@ -8,12 +8,17 @@ export abstract class Entity
 
     public constructor(id?: string, mediator?: IMediator) 
     {
-        this.id = id || uuid4();
+        this.id = id || this.generateId();
         this.mediator = mediator; 
     }
 
     public get getId() : string 
     {
         return this.id;
+    }
+
+    private generateId() : string
+    {
+        return randomBytes(32).toString('hex');
     }
 }

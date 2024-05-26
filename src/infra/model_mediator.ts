@@ -8,13 +8,13 @@ export class ModelMediator implements IMediator, IUserRepository
 {
     private User: UserModel;
 
-    send(context: Sequelize) : void
+    public send(context: Sequelize) : void
     {
         this.User = new UserModel(context);
     }
 
-    addUserRepository(user: IUser) : void
+    public async addUserRepository(user: IUser) : Promise<boolean>
     {
-        this.User.createUser(user);
+        return await this.User.createUser(user);
     }
 }

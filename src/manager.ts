@@ -1,6 +1,7 @@
 import { IAggregateRoot } from "./domain/primitives/aggregate_root_impl";
 import { IMediator } from "./shared/mediator_impl";
 import { IUserRepository } from "./domain/user/user_repository_impl";
+import { IUser } from "./domain/user/user_impl";
 import { User } from "./domain/user/user";
 
 
@@ -13,6 +14,7 @@ export class Manager implements IMediator
     private constructor(userMediator?: IUserRepository) 
     {
         this.userMediator = userMediator;
+        this.entities = new Array();
     }
 
     public static getInstance(userMediator?: IUserRepository) : Manager 
@@ -21,26 +23,29 @@ export class Manager implements IMediator
         {
             if(!userMediator)
             {
-                throw new Error('Necessary a modelMediator!');
+                throw console.error('Necessary a modelMediator!');
             }
+            Manager.instance = new Manager(userMediator);
         }
         return Manager.instance;
     }
 
-    public static addEntity(enity: IAggregateRoot): void 
+    public addEntity(entity: IAggregateRoot): void 
     {
-        this.instance.entities.push(enity);
+        this.entities.push(entity);
     }
 
-    public static notifyUsers() : void
+    public notifyUsers() : void
     {
-        this.instance.entities.forEach(entity => {
+        this.entities.forEach(entity => {
             entity.notify();
         });
     }
 
-    send(user?: User) : void
+    async send(user?: User) : Promise<boolean>
     { //mediator implementation
-        //this.userMediator.addUserRepository();// add a new user in repository
+        //User Implementation
+        const newUser: IUser = {id: user.getId, user_name:user.getName, email:user.getEmail(), password: user.getPassword()};
+        return this.userMediator.addUserRepository(newUser);// add a new user in repository
     }
 }
