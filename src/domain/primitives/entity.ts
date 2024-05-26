@@ -1,7 +1,7 @@
 import { IMediator } from "src/shared/mediator_impl";
 import {uuid4} from "uuid";
 
-export abstract class entity 
+export abstract class Entity 
 {
     protected id: string;
     protected mediator: IMediator;
